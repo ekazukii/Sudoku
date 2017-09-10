@@ -7,128 +7,153 @@
 	<title></title>
 	<style type="text/css">
 		th {
-			border: 1px solid black;
-			font-size: 56px;
-			min-height: 100px;
-			min-width: 100px;
+			border: 1px solid #888888;
+			font-size: 18px;
+			height: 53px;
+			width: 53px;
 		}
 
 		.right {
-			border-right: 5px solid black;
+			border-right: 3px solid #888888;
 		}
 
 		.bottom {
-			border-bottom: 5px solid black;
+			border-bottom: 3px solid #888888;
 		}
 
 		table {
     		border-collapse: collapse;
+  			margin: 0 auto;
+    		font-weight: normal;
+    		/*font-size: 100%;*/
+    		font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  			
+  			line-height: 1.5;
+
+  			color: #004040;
 		}
+
+		#total {
+			display: flex;
+		}
+
+		#option {
+			margin-left: 50px;
+		}
+
+
 
 	</style>
 </head>
 <body>
-	<table>
-		<tr>
-			<th id="0"></th>
-			<th id="1"></th>
-			<th id="2" class="right"></th>
-			<th id="3"></th>
-			<th id="4"></th>
-			<th id="5" class="right"></th>
-			<th id="6"></th>
-			<th id="7"></th>
-			<th id="8"></th>
-		</tr>
-		<tr>
-			<th id="9"></th>
-			<th id="10"></th>
-			<th id="11" class="right"></th>
-			<th id="12"></th>
-			<th id="13"></th>
-			<th id="14" class="right"></th>
-			<th id="15"></th>
-			<th id="16"></th>
-			<th id="17"></th>
-		</tr>
-		<tr>
-			<th id="18" class="bottom"></th>
-			<th id="19" class="bottom"></></th>
-			<th id="20" class="bottom right"></th>
-			<th id="21" class="bottom"></></th>
-			<th id="22" class="bottom"></></th>
-			<th id="23" class="bottom right"></th>
-			<th id="24" class="bottom"></></th>
-			<th id="25" class="bottom"></></th>
-			<th id="26" class="bottom"></></th>
-		</tr>
-		<tr>
-			<th id="27"></th>
-			<th id="28"></th>
-			<th id="29" class="right"></th>
-			<th id="30"></th>
-			<th id="31"></th>
-			<th id="32" class="right"></th>
-			<th id="33"></th>
-			<th id="34"></th>
-			<th id="35"></th>
-		</tr>
-		<tr>
-			<th id="36"></th>
-			<th id="37"></th>
-			<th id="38" class="right"></th>
-			<th id="39"></th>
-			<th id="40"></th>
-			<th id="41" class="right"></th>
-			<th id="42"></th>
-			<th id="43"></th>
-			<th id="44"></th>
-		</tr>
-		<tr>
-			<th id="45" class="bottom"></th>
-			<th id="46" class="bottom"></th>
-			<th id="47" class="bottom right"></th>
-			<th id="48" class="bottom"></th>
-			<th id="49" class="bottom"></th>
-			<th id="50" class="bottom right"></th>
-			<th id="51" class="bottom"></th>
-			<th id="52" class="bottom"></th>
-			<th id="53" class="bottom"></th>
-		</tr>
-		<tr>
-			<th id="54"></th>
-			<th id="55"></th>
-			<th id="56" class="right"></th>
-			<th id="57"></th>
-			<th id="58"></th>
-			<th id="59" class="right"></th>
-			<th id="60"></th>
-			<th id="61"></th>
-			<th id="62"></th>
-		</tr>
-		<tr>
-			<th id="63"></th>
-			<th id="64"></th>
-			<th id="65" class="right"></th>
-			<th id="66"></th>
-			<th id="67"></th>
-			<th id="68" class="right"></th>
-			<th id="69"></th>
-			<th id="70"></th>
-			<th id="71"></th>
-		</tr>
-		<tr>
-			<th id="72"></th>
-			<th id="73"></th>
-			<th id="74" class="right"></th>
-			<th id="75"></th>
-			<th id="76"></th>
-			<th id="77" class="right"></th>
-			<th id="78"></th>
-			<th id="79"></th>
-			<th id="80"></th>
-		</tr>
-	</table>
+	<div id="total">
+		<div>
+			<table>
+				<tr>
+					<th id="0"></th>
+					<th id="1"></th>
+					<th id="2" class="right"></th>
+					<th id="3"></th>
+					<th id="4"></th>
+					<th id="5" class="right"></th>
+					<th id="6"></th>
+					<th id="7"></th>
+					<th id="8"></th>
+				</tr>
+				<tr>
+					<th id="9"></th>
+					<th id="10"></th>
+					<th id="11" class="right"></th>
+					<th id="12"></th>
+					<th id="13"></th>
+					<th id="14" class="right"></th>
+					<th id="15"></th>
+					<th id="16"></th>
+					<th id="17"></th>
+				</tr>
+				<tr>
+					<th id="18" class="bottom"></th>
+					<th id="19" class="bottom"></></th>
+					<th id="20" class="bottom right"></th>
+					<th id="21" class="bottom"></></th>
+					<th id="22" class="bottom"></></th>
+					<th id="23" class="bottom right"></th>
+					<th id="24" class="bottom"></></th>
+					<th id="25" class="bottom"></></th>
+					<th id="26" class="bottom"></></th>
+				</tr>
+				<tr>
+					<th id="27"></th>
+					<th id="28"></th>
+					<th id="29" class="right"></th>
+					<th id="30"></th>
+					<th id="31"></th>
+					<th id="32" class="right"></th>
+					<th id="33"></th>
+					<th id="34"></th>
+					<th id="35"></th>
+				</tr>
+				<tr>
+					<th id="36"></th>
+					<th id="37"></th>
+					<th id="38" class="right"></th>
+					<th id="39"></th>
+					<th id="40"></th>
+					<th id="41" class="right"></th>
+					<th id="42"></th>
+					<th id="43"></th>
+					<th id="44"></th>
+				</tr>
+				<tr>
+					<th id="45" class="bottom"></th>
+					<th id="46" class="bottom"></th>
+					<th id="47" class="bottom right"></th>
+					<th id="48" class="bottom"></th>
+					<th id="49" class="bottom"></th>
+					<th id="50" class="bottom right"></th>
+					<th id="51" class="bottom"></th>
+					<th id="52" class="bottom"></th>
+					<th id="53" class="bottom"></th>
+				</tr>
+				<tr>
+					<th id="54"></th>
+					<th id="55"></th>
+					<th id="56" class="right"></th>
+					<th id="57"></th>
+					<th id="58"></th>
+					<th id="59" class="right"></th>
+					<th id="60"></th>
+					<th id="61"></th>
+					<th id="62"></th>
+				</tr>
+				<tr>
+					<th id="63"></th>
+					<th id="64"></th>
+					<th id="65" class="right"></th>
+					<th id="66"></th>
+					<th id="67"></th>
+					<th id="68" class="right"></th>
+					<th id="69"></th>
+					<th id="70"></th>
+					<th id="71"></th>
+				</tr>
+				<tr>
+					<th id="72"></th>
+					<th id="73"></th>
+					<th id="74" class="right"></th>
+					<th id="75"></th>
+					<th id="76"></th>
+					<th id="77" class="right"></th>
+					<th id="78"></th>
+					<th id="79"></th>
+					<th id="80"></th>
+				</tr>
+			</table>
+		</div>
+		<div id="option">
+			<input type="button" value="Imprimer cette page" onClick="window.print()">
+		</div>
+	</div>
 
 	<script type="text/javascript">
 	var sudoku, grid;
