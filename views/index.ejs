@@ -30,6 +30,11 @@
 			width: 53px;
 		}
 
+		td {
+			border: 1px solid #888888;
+			font-size: 18px;
+		}
+
 		.input {
 			border: 0;
 			padding: 0;
@@ -179,12 +184,50 @@
 					<th id="80" class="unchecked"></th>
 				</tr>
 			</table>
+			<div>
+				<span id="s"></span> s <span id="m"></span> m <span id="h"></span> h
+			</div>
 		</div>
 		<div id="option">
 			<input type="button" value="Imprimer cette page" onClick="window.print()">
 			<input type="button" value="Valider" name="valid" id="valid" onClick="check()">
-			<input type="button" value="Sauvegarder" name="save" id="save">
-			<input type="button" value="login" name="" onClick="loginButton()">
+			<div>
+				<br>
+				<table>
+					<tr>
+						<th>Username</th>
+						<th>Score</th>
+					</tr>
+					<tr>
+						<td id="user0">Baptiste</td>
+						<td id="score0">00:00:01</td>
+					</tr>
+					<tr>
+						<td id="user1"></td>
+						<td id="score1"></td>
+					</tr>
+					<tr>
+						<td id="user2"></td>
+						<td id="score2"></td>	
+					</tr>
+					<tr>
+						<td id="user3"></td>
+						<td id="score3"></td>						
+					</tr>
+					<tr>
+						<td id="user4"></td>
+						<td id="score4"></td>						
+					</tr>
+					<tr>
+						<td id="user5"></td>
+						<td id="score5"></td>						
+					</tr>
+					<tr>
+						<td id="user6"></td>
+						<td id="score6"></td>						
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 
@@ -192,24 +235,25 @@
 		<br>
 		<br>
 		<h2>Sudoku</h2>
+		<p>
+			Bravo tu as terminer le sudoku en <br /><span id="temps">(Temps)</span>
+		</p>
 		<br>
-		<label for="email">Adresse e-mail : </label> <br>
-		<input type="email" name="email" id="email"> <br> 
+		<label for="username">Nom d'utilisateur pour sauvegarder le score : </label> <br> 
 		<br>
-		<label for="mdp">Mot de passe : </label> <br>
-		<input type="password" name="mdp" id="mdp"> <br>
+		<input type="text" name="username" id="username"> <br>
 		<br> <br>
-		<input type="button" name="connect" id="connect" value="Se connecter"> <br>
+		<input type="button" name="connect" id="connect" value="Sauvegarder" onClick="save()"> <br>
 		<br>
-		<input type="button" name="create" id="create" value="Creer un compte">
 	</div>
 
 	<script type="text/javascript">
+	score = '00:00:00';
 	$("#login").hide();
 	var sudoku, grid;
     sudoku = new Sudoku();
 	sudoku.generate();
-	var grid = sudoku.forget(0.10);
+	var grid = sudoku.forget(0.30);
 	console.log(grid)
 	for (var i = 0; i < 80; i++) {
 		if (!grid[i].forget) {
@@ -226,6 +270,21 @@
 		elements[i].appendChild(element)
 		//elements[i].addEventListener("click", function() {alert('test')},false);
 	}
+
+	$.ajax({
+		url: '/bestScore',
+		type: 'get',
+		datatype: 'json',
+
+		success : function(json, statut){   
+			console.log(json);
+			for (var i = 0; i < json.length; i++) {
+				$("#user" + i).html(json[i].username);
+				$("#score" + i).html(json[i].score);
+			}
+        }
+
+	})
 
 	function check() {
 		var elements = document.getElementsByClassName("unchecked");
@@ -254,10 +313,11 @@
 
 		}
 		if (document.getElementsByClassName("unchecked").length === 0) {
-			console.info("WINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN !!")
-			var element = document.createElement("div")
-			element.innerHTML = '<b><center><font size="3" color="red">GG</font></center></b>'; // oui je sais c'est pas beau mais bon 
-			document.getElementById("option").appendChild(element)
+			//$("#temps").html(h +" heures, " + m + " minutes et " + s + " secondes");
+			score = dchiffre(h) + ':' + dchiffre(m) + ':' + dchiffre(s);
+			$("#temps").html(score);
+			$("#login").fadeIn();
+			clearInterval(temps);
 		}
 	}
 
@@ -269,11 +329,54 @@
 		}
 	}
 
-	function login() {
+	function save() {
+		var username = $("#username").val(); 
 		$.ajax({
-			url: 'login'
+			url: '/save?username=' + username + "&score=" + score,
+			type: 'get',
+			//data: 'username=' + username + "&score=" + score,
+			datatype: 'json',
+
+			success : function(json, status) {
+				location.reload();
+			}
 
 		});
+	}
+ 
+	var m = 0; 
+	var s = 0; 
+	var h = 0;
+
+	var temps = setInterval(function()
+	{
+		s++;
+		
+		if(s > 59)
+		{
+			m++;
+			s = 0;
+		}
+
+		if (m > 59) {
+			h++;
+			m = 0;
+		}
+		
+		$("#s").html(dchiffre(s));
+		$("#m").html(dchiffre(m));
+		$("#h").html(dchiffre(h));
+		
+	},1000);
+
+	function dchiffre(nb)
+	{
+		if(nb < 10) // si le chiffre indiqué est inférieurs à dix ...
+		{
+			nb = "0" + nb; // .. on ajoute un zéro devant avant affichage
+		}
+	
+		return nb;
 	}
 
 	</script>

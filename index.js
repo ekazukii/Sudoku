@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app); 
 var mysql = require('mysql');
+var crypto = require('crypto');
 
 server.listen(8080);
 
@@ -44,6 +45,31 @@ app.get('/', function(req, res) {
     //res.end('Vous êtes à l\'accueil');
     res.render('index.ejs');
 });
+
+app.get('/save', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    var username = req.query.username;
+    var score = req.query.score;
+
+    console.log(req.query);
+
+    sql = "INSERT INTO score (username, score) VALUES ('"+username+"', '"+score+"')";
+    con.query(sql, function (error, results, fields) {
+        if (error) throw error;
+        console.log(results);
+    });
+    res.send(JSON.stringify({}));
+})
+
+app.get('/bestScore', function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    sql = "SELECT * FROM score ORDER BY score LIMIT 7"
+    con.query(sql, function(err, results, fields) {
+        if (err) throw err;
+        console.log(results)
+        res.send(JSON.stringify(results));
+    })
+})
 
 app.get('/lib/jquery.js', function(req, res) {
 
