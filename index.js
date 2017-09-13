@@ -1,9 +1,39 @@
 var express = require('express');
 var app = express();
 var server = require('http').Server(app); 
-var fs = require('fs');
+var mysql = require('mysql');
 
 server.listen(8080);
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "root",
+  database: "sudoku"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  con.query("SHOW DATABASES LIKE 'sudoku'", function (err, result) { 
+    if (err) throw err; 
+    if (typeof result[0] === 'undefined') {
+        con.query("CREATE DATABASE sudoku", function (err, result) {
+            console.log("Database created");
+        });
+    }
+  });
+
+  con.query("SHOW TABLES LIKE 'users'", function(err, result) {
+    if (err) throw err; 
+    if (typeof result[0] === 'undefined') {
+        con.query("CREATE TABLE users (pseudo VARCHAR())", function (err, result) {
+            console.log(result);  
+        });
+    }
+  })
+});
+
 /**
  * Function call for print the index
  */
