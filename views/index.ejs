@@ -1,363 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script type="text/javascript" src="/lib/jquery.js"></script>
-	<script type="text/javascript" src="/js/Sudoku.js"></script>
-	<script type="text/javascript" src="/js/Array.js"></script>
 	<title>Sudoku</title>
-	<style type="text/css">
-    #login {
-      text-align: center;
-      top: 5em;
-      width: 25em;
-      height: 25em;
-      left: 50%;
-      transform: translate(-50%, 0);
-      position: absolute;
-      background-color: rgb(233, 229, 238);
-      border: black 1px solid;
-      box-shadow: 10px 10px 5px #888888;
-      z-index: 10; 
-    }
-    
-    th {
-      border: 1px solid #888888;
-      font-size: 18px;
-      height: 53px;
-      width: 53px;
-    }
-    
-    td {
-      border: 1px solid #888888;
-      font-size: 18px;
-    }
-    
-    .input {
-      border: 0;
-      padding: 0;
-      margin: 0; 
-      font-size: 18px;
-      height: 53px;
-      width: 53px;
-      text-align: center;
-      font-style: italic;
-    }
-    
-    .right { border-right: 3px solid #888888; }
-    
-    .bottom { border-bottom: 3px solid #888888; }
-    
-    table {
-      z-index: 1;
-      border-collapse: collapse;
-      margin: 0 auto;
-      font-weight: normal;
-      /*font-size: 100%;*/
-      font-family: 'Helvetica Neue', Helvetica, sans-serif;
-    
-      line-height: 1.8;
-    
-      color: #004040;
-      position: relative;
-    }
-    
-    #total { display: flex; }
-    
-    #option { margin-left: 50px; }
-	</style>
+	<script type="text/javascript"
+    src="/lib/jquery.min.js"></script>
+	<script type="text/javascript"
+    src="/lib/underscore-min.js"></script>
+  <link rel="stylesheet"
+    href="/assets/styles.css">
 </head>
 <body>
-	<div id="total">
-		<div>
-			<table>
-				<tr>
-					<th id="0" class="unchecked"></th>
-					<th id="1" class="unchecked"></th>
-					<th id="2" class="unchecked right"></th>
-					<th id="3" class="unchecked"></th>
-					<th id="4" class="unchecked"></th>
-					<th id="5" class="unchecked right"></th>
-					<th id="6" class="unchecked"></th>
-					<th id="7" class="unchecked"></th>
-					<th id="8" class="unchecked"></th>
-				</tr>
-				<tr>
-					<th id="9"  class="unchecked"></th>
-					<th id="10" class="unchecked"></th>
-					<th id="11" class="unchecked right"></th>
-					<th id="12" class="unchecked"></th>
-					<th id="13" class="unchecked"></th>
-					<th id="14" class="unchecked right"></th>
-					<th id="15" class="unchecked"></th>
-					<th id="16" class="unchecked"></th>
-					<th id="17" class="unchecked"></th>
-				</tr>
-				<tr>
-					<th id="18" class="unchecked bottom"></th>
-					<th id="19" class="unchecked bottom"></></th>
-					<th id="20" class="unchecked bottom right"></th>
-					<th id="21" class="unchecked bottom"></></th>
-					<th id="22" class="unchecked bottom"></></th>
-					<th id="23" class="unchecked bottom right"></th>
-					<th id="24" class="unchecked bottom"></></th>
-					<th id="25" class="unchecked bottom"></></th>
-					<th id="26" class="unchecked bottom"></></th>
-				</tr>
-				<tr>
-					<th id="27" class="unchecked"></th>
-					<th id="28" class="unchecked"></th>
-					<th id="29" class="unchecked right"></th>
-					<th id="30" class="unchecked"></th>
-					<th id="31" class="unchecked"></th>
-					<th id="32" class="unchecked right"></th>
-					<th id="33" class="unchecked"></th>
-					<th id="34" class="unchecked"></th>
-					<th id="35" class="unchecked"></th>
-				</tr>
-				<tr>
-					<th id="36" class="unchecked"></th>
-					<th id="37" class="unchecked"></th>
-					<th id="38" class="unchecked right"></th>
-					<th id="39" class="unchecked"></th>
-					<th id="40" class="unchecked"></th>
-					<th id="41" class="unchecked right"></th>
-					<th id="42" class="unchecked"></th>
-					<th id="43" class="unchecked"></th>
-					<th id="44" class="unchecked"></th>
-				</tr>
-				<tr>
-					<th id="45" class="unchecked bottom"></th>
-					<th id="46" class="unchecked bottom"></th>
-					<th id="47" class="unchecked bottom right"></th>
-					<th id="48" class="unchecked bottom"></th>
-					<th id="49" class="unchecked bottom"></th>
-					<th id="50" class="unchecked bottom right"></th>
-					<th id="51" class="unchecked bottom"></th>
-					<th id="52" class="unchecked bottom"></th>
-					<th id="53" class="unchecked bottom"></th>
-				</tr>
-				<tr>
-					<th id="54" class="unchecked"></th>
-					<th id="55" class="unchecked"></th>
-					<th id="56" class="unchecked right"></th>
-					<th id="57" class="unchecked"></th>
-					<th id="58" class="unchecked"></th>
-					<th id="59" class="unchecked right"></th>
-					<th id="60" class="unchecked"></th>
-					<th id="61" class="unchecked"></th>
-					<th id="62" class="unchecked"></th>
-				</tr>
-				<tr>
-					<th id="63" class="unchecked"></th>
-					<th id="64" class="unchecked"></th>
-					<th id="65" class="unchecked right"></th>
-					<th id="66" class="unchecked"></th>
-					<th id="67" class="unchecked"></th>
-					<th id="68" class="unchecked right"></th>
-					<th id="69" class="unchecked"></th>
-					<th id="70" class="unchecked"></th>
-					<th id="71" class="unchecked"></th>
-				</tr>
-				<tr>
-					<th id="72" class="unchecked"></th>
-					<th id="73" class="unchecked"></th>
-					<th id="74" class="unchecked right"></th>
-					<th id="75" class="unchecked"></th>
-					<th id="76" class="unchecked"></th>
-					<th id="77" class="unchecked right"></th>
-					<th id="78" class="unchecked"></th>
-					<th id="79" class="unchecked"></th>
-					<th id="80" class="unchecked"></th>
-				</tr>
-			</table>
-			<div>
-				<span id="s"></span> s <span id="m"></span> m <span id="h"></span> h
-			</div>
-		</div>
-		<div id="option">
-			<input type="button" value="Imprimer cette page" onClick="window.print()">
-			<input type="button" value="Valider" name="valid" id="valid" onClick="check()">
-			<div>
-				<br>
-				<table>
-					<tr>
-						<th>Username</th>
-						<th>Score</th>
-					</tr>
-					<!--<tr>
-						<td id="user0">Baptiste</td>
-						<td id="score0">00:00:01</td>
-					</tr>-->
-					<tr>
-						<td id="user1"></td>
-						<td id="score1"></td>
-					</tr>
-					<tr>
-						<td id="user2"></td>
-						<td id="score2"></td>	
-					</tr>
-					<tr>
-						<td id="user3"></td>
-						<td id="score3"></td>						
-					</tr>
-					<tr>
-						<td id="user4"></td>
-						<td id="score4"></td>						
-					</tr>
-					<tr>
-						<td id="user5"></td>
-						<td id="score5"></td>						
-					</tr>
-					<tr>
-						<td id="user6"></td>
-						<td id="score6"></td>						
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-
-	<div id="login">
-		<br>
-		<br>
-		<h2>Sudoku</h2>
-		<p>
-			Bravo tu as terminer le sudoku en <br /><span id="temps">(Temps)</span>
-		</p>
-		<br>
-		<label for="username">Nom d'utilisateur pour sauvegarder le score : </label> <br> 
-		<br>
-		<input type="text" name="username" id="username"> <br>
-		<br> <br>
-		<input type="button" name="connect" id="connect" value="Sauvegarder" onClick="save()"> <br>
-		<br>
-	</div>
-
-	<script type="text/javascript">
-    var score = '00:00:00';
-    $("#login").hide();
-    var sudoku, grid;
-    sudoku = new Sudoku();
-    sudoku.generate();
-    var grid = sudoku.forget(0.30);
-    //console.log(grid)
-    for (var i = 0; i < 80; i++) {
-      if (!grid[i].forget) {
-        document.getElementById(i).innerHTML = grid[i].value;
-        document.getElementById(i).classList.remove("unchecked");
-      }
-    }
-    
-    var elements = document.getElementsByClassName("unchecked");
-    for (var i = 0; i < elements.length; i++) {
-      var element = document.createElement("input");
-      element.setAttribute('type', 'text');
-      element.setAttribute('class', 'input');
-      elements[i].appendChild(element)
-      //elements[i].addEventListener("click", function() {alert('test')},false);
-    }
-    
-    $.ajax({
-      url: '/bestScore',
-      type: 'get',
-      datatype: 'json',
-    
-      success : function(json, statut){   
-        //console.log(json);
-        for (var i = 0; i < json.length; i++) {
-          $("#user" + i).html(json[i].username);
-          $("#score" + i).html(json[i].score);
-        }
-      }
-    
-    })
-    
-    function check() {
-      var elements = document.getElementsByClassName("unchecked");
-      var length = elements.length;
-      var listId = [];
-      for (var i = 0; i < elements.length; i++) {
-        listId.push(elements[i].id);
-      }
-    
-      for (var i = 0; i < listId.length; i++) {
-        element = document.getElementById(listId[i])
-        //console.log(i + ' : ' + length)
-        var value = element.childNodes[0].value;
-        if (value === "") {
-          console.warn('cell empty');
-          //return;
-        }
-    
-        if (element.childNodes[0].value == grid[listId[i]].value) {
-          element.removeChild(element.lastChild);
-          element.classList.remove("unchecked");
-          element.innerHTML = grid[listId[i]].value;
-        } else {
-          //console.log('pas égal')
-        }
-      }
-      if (document.getElementsByClassName("unchecked").length === 0) {
-        //$("#temps").html(h +" heures, " + m + " minutes et " + s + " secondes");
-        score = dchiffre(h) + ':' + dchiffre(m) + ':' + dchiffre(s);
-        $("#temps").html(score);
-        $("#login").fadeIn();
-        clearInterval(temps);
-      }
-    }
-    
-    function loginButton() {
-      if ($("#login").is(':hidden')){
-        $("#login").fadeIn();
-      } else {
-        $("#login").fadeOut();
-      }
-    }
-    
-    function save() {
-      var username = $("#username").val(); 
-      $.ajax({
-        url: '/save?username=' + username + "&score=" + score,
-        type: 'get',
-        //data: 'username=' + username + "&score=" + score,
-        datatype: 'json',
-        success : function(json, status) {
-          location.reload();
-        }
-      });
-    }
-    
-    var m = 0; 
-    var s = 0; 
-    var h = 0;
-    
-    var temps = setInterval(function() {
-      s++;
-    
-      if(s > 59) {
-        m++;
-        s = 0;
-      }
-    
-      if (m > 59) {
-        h++;
-        m = 0;
-      }
-    
-      $("#s").html(dchiffre(s));
-      $("#m").html(dchiffre(m));
-      $("#h").html(dchiffre(h));
-    
-    },1000);
-    
-    function dchiffre(nb) {
-      // si le chiffre indiqué est inférieurs à dix ...
-      if(nb < 10) {
-        // .. on ajoute un zéro devant avant affichage
-        nb = "0" + nb;
-      }
-      return nb;
-    }
-	</script>
+  <main class="main">
+    <section id="sudoku"
+      class="sudoku">
+      <header class="header">
+        <h1 class="h1">
+          HELVETIKU
+          <span class="remaining"></span>
+        </h1>
+      </header>
+      <ul id="grid"
+        class="grid"></ul>
+      <footer class="footer">
+        <p class="time">
+        <time datetime="00:00:00">
+          00:00:00
+        </time>
+        </p>
+      </footer>
+    </section>
+  </main>
+  <script src="/lib/Arrays.js"></script>
+  <script src="/js/Sudoku.js"></script>
+  <script src="/lib/backboon.js"></script>
+  <script src="/app/collection.js"></script>
+  <script src="/app/sudoku-cell.js"></script>
+  <script src="/app/sudoku-view.js"></script>
+  <script src="/app/sudoku-app.js"></script>
 </body>
 </html>

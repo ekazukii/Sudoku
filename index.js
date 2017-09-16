@@ -7,10 +7,10 @@ var crypto  = require('crypto');
 server.listen(8080);
 
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root",
-  database: "sudoku"
+  database : "sudoku",
+  password : "root",
+  host     : "localhost",
+  user     : "root"
 });
 
 con.connect(function(err) {
@@ -39,8 +39,9 @@ con.connect(function(err) {
 });
 
 /**
- * Function call for print the index
+ * Function call to print the index
  */
+
 app.get('/', function(req, res) {
   res.setHeader('Content-Type', 'text/html');
   res.render('index.ejs');
@@ -69,15 +70,10 @@ app.get('/bestScore', function(req, res) {
   });
 });
 
-app.get('/lib/jquery.js', function(req, res) {
+// libs
+app.get('/lib/Arrays.js', function(req, res) {
   res.setHeader('Content-Type', 'text/javascript');
-  res.sendFile(__dirname + '/lib/jquery-min.js');
-});
-
-app.get('/js/Array.js', function(req, res) {
-  res.setHeader('Content-Type', 'text/javascript');
-
-  res.sendFile(__dirname + '/views/js/Arrays.js');
+  res.sendFile(__dirname + '/lib/Arrays.js');
 });
 
 app.get('/js/Sudoku.js', function(req, res) {
@@ -85,11 +81,49 @@ app.get('/js/Sudoku.js', function(req, res) {
   res.sendFile(__dirname + '/views/js/Sudoku.js');
 });
 
-app.get('/css/style.css', function(req, res) {
-  res.setHeader('Content-Type', 'text/css');
-  res.sendFile(__dirname + '/css/style.css');
+app.get('/lib/jquery.min.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/lib/jquery-min.js');
 });
 
+app.get('/lib/underscore-min.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/lib/underscore-min.js');
+});
+
+app.get('/lib/backboon.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/lib/backboon.js');
+});
+
+// App files
+app.get('/app/collection.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/app/collection.js');
+});
+
+app.get('/app/sudoku-app.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/app/sudoku-app.js');
+});
+
+app.get('/app/sudoku-cell.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/app/sudoku-cell.js');
+});
+
+app.get('/app/sudoku-view.js', function(req, res) {
+  res.setHeader('Content-Type', 'text/javascript');
+  res.sendFile(__dirname + '/app/sudoku-view.js');
+});
+
+// styles
+app.get('/assets/styles.css', function(req, res) {
+  res.setHeader('Content-Type', 'text/css');
+  res.sendFile(__dirname + '/assets/styles.css');
+});
+
+// 404
 app.use(function(req, res, next){
   res.setHeader('Content-Type', 'text/plain');
   res.status(404).send("page introuvable");
