@@ -20,6 +20,7 @@ var app = app || {};
       }
 
       if (app.gameStarted !== true) {
+        // Attempting to fill one grid cell.
         publish('game:start');
       }
 
@@ -45,7 +46,15 @@ var app = app || {};
       return this;
     },
     'initialize': function () {
-      this.template = _.template('<p><input type="text" maxlength="1" <%=(forget && forget === false || done === true ? "readonly" : "" )%> value="<%=(forget === false || done === true ? value : "" )%>"></p>');
+      var template = '<p>' +
+        '<input ' +
+          'type="text" ' +
+          'maxlength="1" ' +
+          '<%=(forget && forget === false || done === true ? "readonly" : "" )%> ' +
+          'value="<%=(forget === false || done === true ? value : "" )%>">' +
+          '</p>';
+
+      this.template = _.template(template);
     }
   });
 })();

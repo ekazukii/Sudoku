@@ -23,8 +23,8 @@ var app = app || {};
         'done': false
       }).length;
       this.$remaining.text(remaining);
-      if(remaining === 0) {
-        this.stopTimer();
+      if (remaining === 0) {
+        publish('game:end');
       }
 
       // Renders the grid.
@@ -80,6 +80,19 @@ var app = app || {};
         this.timeoutId = window.setInterval(module.setTime.bind(module), 1000);
       }
     },
+    'endGame': function () {
+      this.stopTimer();
+      // todo: display save invite
+    },
+    'startGame': function() {
+      this.startTimer();
+    },
+    'showElement': function(element) {
+      $(element).hide();
+    },
+    'hideElement': function(element) {
+      $(element).show();
+    },
     'initialize': function () {
 
       // Elements
@@ -90,7 +103,8 @@ var app = app || {};
       // Subscriptions
       subscribe('collection:add', this.render, this);
       subscribe('modele:update', this.render, this);
-      subscribe('game:start', this.startTimer, this);
+      subscribe('game:start', this.startGame, this);
+      subscribe('game:end', this.endGame, this);
 
       // Generate a grid.
       var sudoku, grid;
