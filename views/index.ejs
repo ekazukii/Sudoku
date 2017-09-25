@@ -1,64 +1,80 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Sudoku</title>
-	<script type="text/javascript"
-    src="/lib/jquery.min.js"></script>
-	<script type="text/javascript"
-    src="/lib/underscore-min.js"></script>
-  <link rel="stylesheet"
-    href="/assets/styles.css">
-</head>
-<body>
-  <main class="main">
-    <section id="sudoku"
-      class="sudoku">
-      <header class="header">
-        <h1 class="h1">
-          HELVETIKU
-          <span class="remaining"></span>
-        </h1>
-      </header>
+  <head>
+    <title>Sudoku</title>
+    <script type="text/javascript"
+      src="/lib/jquery.min.js"></script>
+    <script type="text/javascript"
+      src="/lib/underscore-min.js"></script>
+    <link rel="stylesheet"
+      href="/assets/styles.css">
+  </head>
+  <body>
+    <main class="main">
+      <section id="sudoku"
+        class="sudoku">
+        <div class="grid-holder">
+          <ul id="app-grid"
+            class="grid"></ul>
+          <footer class="footer">
+            <p class="time">
+            <time datetime="00:00:00">
+              00:00:00
+            </time>
+            </p>
+          </footer>
+        </div>
 
-      <ul id="grid"
-        class="grid"></ul>
+        <aside id="app-panel"
+          class="grid-aside">
+          <p id="app-success"
+            class="save">
+            <strong>You won !</strong><br>
+            <span class="input-group">
+              <input type="text"
+                name="username"
+                placeholder=""
+                value="">
+              <button>New game</button>
+              <button>Save</button>
+            </span>
+          </p>
 
-      <footer class="footer">
-        <p class="time">
-        <time datetime="00:00:00">
-          00:00:00
-        </time>
-        </p>
+          <ul id="app-scores"
+            class="app-scores">
+          </ul>
 
-        <p class="save">
-        <strong>You won !</strong><br>
-        <span class="input-group">
-          <input type="text"
-            name="username"
-            placeholder=""
-            value="">
-          <button>New game</button>
-          <button>Save</button>
-        </span>
-        </p>
-
-        <p class="start">
-          Select your level:<br>
-          <span class="input-group">
-            <button>Easy</button>
-            <button>Not so easy</button>
-            <button>Hard</button>
-          </span>
-        </p>
-      </footer>
-    </section>
-  </main>
-  <script src="/lib/Arrays.js"></script>
-  <script src="/js/Sudoku.js"></script>
-  <script src="/lib/backboon.js"></script>
-  <script src="/app/collection.js"></script>
-  <script src="/app/sudoku-cell.js"></script>
-  <script src="/app/sudoku-view.js"></script>
-  <script src="/app/sudoku-app.js"></script>
-</body>
+          <p id="app-options"
+            class="start">
+            Select your level:<br>
+            <label>
+              <input type="radio"
+                name="difficulty"
+                value="0.30">
+              Easy
+            </label>
+            <label>
+              <input type="radio"
+                name="difficulty"
+                value="0.40">
+              Not so easy
+            </label>
+            <label>
+              <input type="radio"
+                name="difficulty"
+                value="0.50">
+              Evil
+            </label>
+          </p>
+        </aside>
+      </section>
+    </main>
+    <script src="/lib/Arrays.js"></script>
+    <script src="/js/Sudoku.js"></script>
+    <script src="/lib/backboon.js"></script>
+    <script src="/app/collection.js"></script>
+    <script src="/app/sudoku-cell.js"></script>
+    <script src="/app/sudoku-view.js"></script>
+    <script src="/app/sudoku-app.js"></script>
+  </body>
 </html>

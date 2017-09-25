@@ -38,10 +38,6 @@ con.connect(function(err) {
   }
 });
 
-/**
- * Function call to print the index
- */
-
 app.get('/', function(req, res) {
   res.setHeader('Content-Type', 'text/html');
   res.render('index.ejs');

@@ -1,1 +1,149 @@
-html .main,html .header,html .section,body .main,body .header,body .section,.sudoku .grid,.sudoku .grid .cell{display:block}.sudoku .footer p.time time{display:inline-block;zoom:1;*display:inline}html,body,.sudoku .grid,.sudoku .grid .cell,.sudoku .grid .cell p,.sudoku .grid .cell p input,.sudoku .footer p.time{margin:0 0 0 0;padding:0 0 0 0}.sudoku .grid:after{content:'';display:block;width:100%;height:0;clear:both}.sudoku .hidden{display:none !important}html .main,body .main{padding:1em}.sudoku{width:480px;margin:0 auto;font-font-weight:normal;font-font-size:100%;font-family:'Helvetica Neue', Helvetica, sans-serif;line-height:1.5}.sudoku .h1,.sudoku .h2,.sudoku .h3,.sudoku .h4,.sudoku .h5{line-height:1}.sudoku .h1{color:#cf0a1d}.sudoku .h2,.sudoku .h3,.sudoku .h4,.sudoku .h5{font-weight:400}.sudoku .h1{font-size:2em;font-weight:200}.sudoku .h2{font-size:1.6em}.sudoku .h3{font-size:1.4em}.sudoku .h4{font-size:1.2em}.sudoku .h5{font-size:1em}.sudoku .p{font-size:1em}.sudoku .p.medium{font-size:.875em}.sudoku .p.small{font-size:.75em}.sudoku .grid{list-style-type:none;box-sizing:border-box;border-width:2px 0 0 2px;border-style:solid;border-color:#6f6f6f}.sudoku .grid .cell{box-sizing:border-box;float:left;width:11.111111111%;height:53px;line-height:53px;font-size:18px;color:#004040;text-align:center;cursor:default;background-color:#ffffff;border-width:0 1px 1px 0;border-style:solid;border-color:#6f6f6f}.sudoku .grid .cell:nth-child(3n+0){border-right-width:2px}.sudoku .grid .cell.row-3{border-bottom-width:2px}.sudoku .grid .cell p{width:100%;height:100%}.sudoku .grid .cell p input{box-sizing:border-box;width:100%;height:51px;line-height:51px;border-width:0;text-align:center;font:inherit;background-color:transparent}.sudoku .grid .cell p input[readonly="readonly"]{cursor:default;background-color:transparent !important}.sudoku .grid .cell p input:focus{background-color:yellow}.sudoku .grid .cell p input.error{color:#cf0a1d}.sudoku .footer p.time{text-align:right}.sudoku .footer p.time time{padding:.25em .5em;background-color:#6f6f6f;color:#ffffff;font-size:.75em;vertical-align:top}
+html .main,
+html .header,
+html .section, body .main,
+body .header,
+body .section, .sudoku .grid, .sudoku .grid .cell {
+  display: block; }
+
+.sudoku .footer p.time time {
+  display: inline-block;
+  zoom: 1;
+  *display: inline; }
+
+html, body, .sudoku .grid, .sudoku .grid .cell, .sudoku .grid .cell p, .sudoku .grid .cell p input, .sudoku .footer p.time {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0; }
+
+.sudoku .grid:after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 0;
+  clear: both; }
+
+.sudoku .hidden {
+  display: none !important; }
+
+html .main, body .main {
+  padding: 1em; }
+
+.sudoku {
+  display: inline-flex;
+  justify-content: center;
+  font-font-weight: normal;
+  font-font-size: 100%;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  line-height: 1.5;
+  /*.button {
+    @extend %inline-block;
+    @extend %reset-spacing;
+    background-color: $red;
+    border: {
+      width: .5em .75em;
+      style: solid;
+      color: $red;
+      radius: 2px;
+    }
+    letter-spacing: .05em;
+    font-weight: 700;
+    line-height: 1;
+    color: #ffffff;
+    vertical-align: inherit;
+    cursor: pointer;
+    &:hover {
+      border-color: darken($red, 5%);
+      background-color: darken($red, 5%);
+    }
+  }*/ }
+  .sudoku .grid-holder {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 480px; }
+  .sudoku .grid-aside {
+    background-color: red;
+    padding: 15px;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto; }
+  .sudoku .h1,
+  .sudoku .h2,
+  .sudoku .h3,
+  .sudoku .h4,
+  .sudoku .h5 {
+    line-height: 1; }
+  .sudoku .h1 {
+    color: #cf0a1d; }
+  .sudoku .h2,
+  .sudoku .h3,
+  .sudoku .h4,
+  .sudoku .h5 {
+    font-weight: 400; }
+  .sudoku .h1 {
+    font-size: 2em;
+    font-weight: 200; }
+  .sudoku .h2 {
+    font-size: 1.6em; }
+  .sudoku .h3 {
+    font-size: 1.4em; }
+  .sudoku .h4 {
+    font-size: 1.2em; }
+  .sudoku .h5 {
+    font-size: 1em; }
+  .sudoku .p {
+    font-size: 1em; }
+    .sudoku .p.medium {
+      font-size: .875em; }
+    .sudoku .p.small {
+      font-size: .75em; }
+  .sudoku .grid {
+    list-style-type: none;
+    box-sizing: border-box;
+    border-width: 2px 0 0 2px;
+    border-style: solid;
+    border-color: #6f6f6f; }
+    .sudoku .grid .cell {
+      box-sizing: border-box;
+      float: left;
+      width: 11.11111%;
+      height: 100%;
+      font-size: 18px;
+      color: #004040;
+      text-align: center;
+      cursor: default;
+      background-color: #ffffff;
+      border-width: 0 1px 1px 0;
+      border-style: solid;
+      border-color: #6f6f6f; }
+      .sudoku .grid .cell:nth-child(3n+0) {
+        border-right-width: 2px; }
+      .sudoku .grid .cell.row-3 {
+        border-bottom-width: 2px; }
+      .sudoku .grid .cell p {
+        width: 100%;
+        height: 100%; }
+        .sudoku .grid .cell p input {
+          box-sizing: border-box;
+          width: 100%;
+          height: 51px;
+          line-height: 51px;
+          border-width: 0;
+          text-align: center;
+          font: inherit;
+          background-color: transparent; }
+          .sudoku .grid .cell p input[readonly="readonly"] {
+            cursor: default;
+            background-color: transparent !important; }
+          .sudoku .grid .cell p input:focus {
+            background-color: yellow; }
+          .sudoku .grid .cell p input.error {
+            color: #cf0a1d; }
+  .sudoku .footer p.time {
+    text-align: right; }
+    .sudoku .footer p.time time {
+      padding: .25em .5em;
+      background-color: #6f6f6f;
+      color: #ffffff;
+      font-size: .75em;
+      vertical-align: top; }
+
+/*# sourceMappingURL=styles.css.map */

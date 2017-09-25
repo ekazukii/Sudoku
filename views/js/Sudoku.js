@@ -1,5 +1,4 @@
 class Sudoku {
-
   constructor() {
     this.generation = 0;
     this.grid = [];

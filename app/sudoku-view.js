@@ -7,11 +7,11 @@ var app = app || {};
   app.main = backboon.view.extend({
     'tmp': [],
     'time': 0,
+    'difficulty': 0.30,
     'timeoutId': null,
-    'gameStarted' : false,
     'el': '#sudoku',
     'events': {
-      //'keypress:[name="item"]': 'add'
+      'click:[name="difficulty"]': 'populate'
     },
     'render': function() {
       var cells, element, remaining;
@@ -28,28 +28,29 @@ var app = app || {};
       }
 
       // Renders the grid.
-      this.$list.empty();
+      this.$grid.empty();
       if(cells.length) {
         _.each(cells, this.renderOne, this);
       }
     },
     'renderOne': function(modele) {
       var view = new app.cell({'modele': modele});
-      this.$list.append(view.render().$el);
+      this.$grid.append(view.render().$el);
     },
-    'populate': function(grid) {
+    'fill': function(grid) {
       var x=0, g, modele, modeles=[];
-      for(x=0; x<grid.length; x++) {
+      for(x=0; x < grid.length; x++) {
         g = grid[x];
         modele = new app.modele({'modele': {
-          'x': g.x,
-          'y': g.y,
-          'value': g.value,
-          'done': g.forget === false ? true : false,
-          'forget': g.forget,
+          'x'      : g.x,
+          'y'      : g.y,
+          'value'  : g.value,
+          'done'   : g.forget === false ? true : false,
+          'forget' : g.forget,
         }});
         modeles.push(modele);
       }
+      app.collection.clear();
       app.collection.add(modeles);
     },
     'setTime': function() {
@@ -82,10 +83,12 @@ var app = app || {};
     },
     'endGame': function () {
       this.stopTimer();
-      // todo: display save invite
+      this.$success.show();
+      this.$scores.show();
     },
     'startGame': function() {
       this.startTimer();
+      $('[name="difficulty"]', this.$options).attr('disabled', true);
     },
     'showElement': function(element) {
       $(element).hide();
@@ -93,12 +96,29 @@ var app = app || {};
     'hideElement': function(element) {
       $(element).show();
     },
+    'populate': function(element) {
+      if (element) {
+        this.difficulty = parseFloat($(element).filter(':checked').val());
+      }
+      var sudoku, grid;
+      sudoku = new Sudoku();
+      sudoku.generate();
+
+      grid = sudoku.forget(this.difficulty);
+
+      if (grid) {
+        this.fill(grid);
+      }
+    },
     'initialize': function () {
 
       // Elements
       this.$remaining = $('.remaining');
       this.$timer     = $('.time time');
-      this.$list      = $('#grid');
+      this.$grid      = $('#app-grid');
+      this.$options   = $('#app-options');
+      this.$success   = $('#app-success');
+      this.$scores    = $('#app-scores');
 
       // Subscriptions
       subscribe('collection:add', this.render, this);
@@ -106,17 +126,13 @@ var app = app || {};
       subscribe('game:start', this.startGame, this);
       subscribe('game:end', this.endGame, this);
 
-      // Generate a grid.
-      var sudoku, grid;
-      sudoku = new Sudoku();
-      sudoku.generate();
+      this.$success.hide();
+      this.$scores.hide();
+      //this.$grid.hide();
+      //this.$timer.hide();
+      this.$options.show();
 
-      // Forget 30% of the grid
-      grid = sudoku.forget(0.30);
-
-      if (grid) {
-        this.populate(grid);
-      }
+      this.populate();
     }
   });
 })();
