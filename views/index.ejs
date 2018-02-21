@@ -9,6 +9,27 @@
 </head>
 
 <body>
+	<h1> Sudoku </h1>
+
+	<div id="select">
+		<div id="settings">
+			<p> Difficulté : 
+				<select name="niveau">
+		        	<option value="1">Novice</option>
+		        	<option value="2">Pas trop nul</option>
+		         	<option value="3">Expert</option>
+		         	<option value="4">Champion</option>
+     			</select></p>
+			<p> Triche     : <input type="checkbox" name="cheat"   value="cheat">   </p>
+			<p> Duel       : <input type="checkbox" name="duel"    value="duel">    </p>
+			<p> Une chance : <input type="checkbox" name="onetry"  value="onetry">  </p>
+			<p> Speed      : <input type="checkbox" name="speed"   value="speed">   </p>
+			<p> Infini     : <input type="checkbox" name="endless" value="endless"> </p>
+			<p id="start" onclick="start()"> Lancer </p>
+		</div>
+	</div>
+
+
 	<div id="total">
 		<div id="grid">
 			<table>
@@ -166,56 +187,21 @@
 		<br/> <br/>
 
 		<h2>Sudoku</h2>
-		<p>
-			Bravo tu as terminer le sudoku en <br/><span id="temps">(Temps)</span>
-		</p>
+		<p> Bravo tu as terminer le sudoku en <br/><span id="temps">(Temps)</span> </p>
 		<br>
-		<label for="username">Nom d'utilisateur pour sauvegarder le score : </label> <br> 
-		<br>
-		<input type="text" name="username" id="username"> <br>
-		<br> <br>
-		<input type="button" name="connect" id="connect" value="Sauvegarder" onClick="save()"> <br>
-		<br>
-	</div>
+
+		<label for="username">Nom d'utilisateur pour sauvegarder le score : </label> <br/> <br/>
+		<input type="text" name="username" id="username"> <br/> <br/> <br/>
+		<input type="button" name="connect" id="connect" value="Sauvegarder" onClick="save()"> <br/> <br/>
+	</div> 
 
 	<script type="text/javascript">
-	score = '00:00:00';
-	$("#login").hide();
-	var sudoku, grid;
-    sudoku = new Sudoku();
-	sudoku.generate();
-	var grid = sudoku.forget(0.30);
-	console.log(grid)
-	for (var i = 0; i < 80; i++) {
-		if (!grid[i].forget) {
-			document.getElementById(i).innerHTML = grid[i].value;
-			document.getElementById(i).classList.remove("unchecked");
-		}
-	}
-	
-	elements = document.getElementsByClassName("unchecked");
-	for (var i = 0; i < elements.length; i++) {
-		var element = document.createElement("input");
-		element.setAttribute('type', 'text');
-		element.setAttribute('class', 'input');
-		elements[i].appendChild(element)
-		//elements[i].addEventListener("click", function() {alert('test')},false);
-	}
 
-	$.ajax({
-		url: '/bestScore',
-		type: 'get',
-		datatype: 'json',
+    $("#total").hide();
+    $("#victoire").hide();
+    var sudoku, grid;
+    var score = '00:00:00';
 
-		success : function(json, statut){   
-			console.log(json);
-			for (var i = 0; i < json.length; i++) {
-				$("#user" + i).html(json[i].username);
-				$("#score" + i).html(json[i].score);
-			}
-        }
-
-	})
 
 	function check() {
 		var elements = document.getElementsByClassName("unchecked");
@@ -251,6 +237,87 @@
 			clearInterval(temps);
 		}
 	}
+	
+
+	function start() {
+		var level   = $("select[name='niveau'] > option:selected").val();
+		var cheat   = $('input[name=cheat]').is(':checked');
+		var duel    = $('input[name=duel]').is(':checked');
+		var onetry  = $('input[name=onetry]').is(':checked');
+		var speed   = $('input[name=speed]').is(':checked');
+		var endless = $('input[name=endless]').is(':checked');
+	    sudoku = new Sudoku();
+		sudoku.generate();
+
+		if (level == 1) {
+			var grid = sudoku.forget(0.30);
+		} else if (level == 2) {
+			var grid = sudoku.forget(0.40);
+		} else if (level == 3) {
+			var grid = sudoku.forget(0.50);
+		} else {
+			var grid = sudoku.forget(0.60);
+		}
+
+		$("#total").show();
+		$("#select").hide();
+
+		$("body").css("background-color","white");
+
+
+		console.log(grid);
+		for (var i = 0; i < 80; i++) {
+			if (!grid[i].forget) {
+				document.getElementById(i).innerHTML = grid[i].value;
+				document.getElementById(i).classList.remove("unchecked");
+			}
+		}
+	
+		elements = document.getElementsByClassName("unchecked");
+
+		for (var i = 0; i < elements.length; i++) {
+			var element = document.createElement("input");
+			element.setAttribute('type', 'text');
+			element.setAttribute('class', 'input');
+			elements[i].appendChild(element)
+			//elements[i].addEventListener("click", function() {alert('test')},false);
+		}
+
+		$.ajax({
+			url: '/bestScore',
+			type: 'get',
+			datatype: 'json',
+
+			success : function(json, statut){   
+				console.log(json);
+				for (var i = 0; i < json.length; i++) {
+					$("#user" + i).html(json[i].username);
+					$("#score" + i).html(json[i].score);
+				}
+	        }
+
+		})
+	 
+		var m = 0, s = 0, h = 0;
+
+		var temps = setInterval(function()
+		{
+			s++;
+			if(s > 59) {
+				m++;
+				s = 0;
+			}
+			if (m > 59) {
+				h++;
+				m = 0;
+			}
+			
+			$("#s").html(dchiffre(s));
+			$("#m").html(dchiffre(m));
+			$("#h").html(dchiffre(h));
+			
+		},1000);
+	}
 
 	function loginButton() {
 		if ($("#login").is(':hidden')){
@@ -274,36 +341,11 @@
 
 		});
 	}
- 
-	var m = 0; 
-	var s = 0; 
-	var h = 0;
 
-	var temps = setInterval(function()
-	{
-		s++;
-		
-		if(s > 59)
-		{
-			m++;
-			s = 0;
-		}
-
-		if (m > 59) {
-			h++;
-			m = 0;
-		}
-		
-		$("#s").html(dchiffre(s));
-		$("#m").html(dchiffre(m));
-		$("#h").html(dchiffre(h));
-		
-	},1000);
 
 	function dchiffre(nb)
 	{
-		if(nb < 10) // si le chiffre indiqué est inférieurs à dix ...
-		{
+		if(nb < 10) {
 			nb = "0" + nb; // .. on ajoute un zéro devant avant affichage
 		}
 	

@@ -1,18 +1,39 @@
-#login {
-	text-align: center;
-		top: 5em;
-		width: 25em;
-		height: 25em;
-		left: 50%;
-	 	transform: translate(-50%, 0);
+body {
+	background-color: rgb(200, 200, 200);
+}
 
-	/*top: 200px;*/
-	/*left: 300px;*/
+#victoire {
+	text-align: center;
+	top: 5em;
+	width: 25em;
+	height: 25em;
+	left: 50%;
+ 	transform: translate(-50%, 0);
+
 	position: absolute;
 	background-color: rgb(233, 229, 238);
 	border: black 1px solid;
 	box-shadow: 10px 10px 5px #888888;
 	z-index: 10; 
+}
+	
+#select {
+	top: 7em;
+	width: 25em;
+	height: 25em;
+	left: 50%;
+ 	transform: translate(-50%, 0);
+	position: absolute;
+	background-color: rgb(233, 229, 238);
+	border-radius: 3px;
+	border: black 1px solid;
+	box-shadow: 15px 15px 4px #888888;
+	z-index: 10; 
+}
+
+#settings {
+	text-indent: 25px;
+	font-size: 20px;
 }
 
 th {
@@ -54,10 +75,10 @@ table {
 	/*font-size: 100%;*/
 	font-family: 'Helvetica Neue', Helvetica, sans-serif;
 		
-		line-height: 1.8;
+	line-height: 1.8;
 
-		color: #004040;
-		position: relative;
+	color: #004040;
+	position: relative;
 }
 
 #total {
@@ -66,4 +87,26 @@ table {
 
 #option {
 	margin-left: 50px;
+}
+
+h1 {
+	font-family: Arial;
+	text-align: center;
+}
+
+#start {
+
+	text-align: center;
+	background-color: rgb(100,100,100);
+	text-indent: 0px;
+	border: 1px solid black;
+	border-radius: 10px;
+	font-size: 35px;
+	margin-left: 125px;
+	margin-right: 125px; 
+	cursor: default;
+}
+
+#start:hover {
+	background-color: rgb(200,200,200);
 }
