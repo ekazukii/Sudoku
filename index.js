@@ -48,13 +48,13 @@ app.get('/', function(req, res) {
 
 app.get('/save', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
-    var username = req.query.username;
-    var score = req.query.score;
-    var level = req.query.level;
+    var username = con.escape(req.query.username);
+    var score = con.escape(req.query.score);
+    var level = con.escape(req.query.level);
 
     console.log(req.query);
 
-    sql = "INSERT INTO score (username, score, level) VALUES ("+con.escape(username)+", "+con.escape(score)+", "+ con.escape(level)+")";
+    sql = "INSERT INTO score (username, score, level) VALUES ("+username+", "+score+", "+ level+")";
     con.query(sql, function (error, results, fields) {
         if (error) throw error;
         console.log(results);
