@@ -1,88 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>Sudoku</title>
 	<script type="text/javascript" src="/lib/jquery.js"></script>
 	<script type="text/javascript" src="/js/Sudoku.js"></script>
 	<script type="text/javascript" src="/js/Array.js"></script>
-	<title>Sudoku</title>
-	<style type="text/css">
-		#login {
-			text-align: center;
-  			top: 5em;
-  			width: 25em;
-  			height: 25em;
-  			left: 50%;
-   		 	transform: translate(-50%, 0);
-
-			/*top: 200px;*/
-			/*left: 300px;*/
-			position: absolute;
-			background-color: rgb(233, 229, 238);
-			border: black 1px solid;
-			box-shadow: 10px 10px 5px #888888;
-			z-index: 10; 
-		}
-
-		th {
-			border: 1px solid #888888;
-			font-size: 18px;
-			height: 53px;
-			width: 53px;
-		}
-
-		td {
-			border: 1px solid #888888;
-			font-size: 18px;
-		}
-
-		.input {
-			border: 0;
-			padding: 0;
-			margin: 0; 
-			font-size: 18px;
-			height: 53px;
-			width: 53px;
-			text-align: center;
-			font-style: italic;
-		}
-
-		.right {
-			border-right: 3px solid #888888;
-		}
-
-		.bottom {
-			border-bottom: 3px solid #888888;
-		}
-
-		table {
-			z-index: 1;
-    		border-collapse: collapse;
-  			margin: 0 auto;
-    		font-weight: normal;
-    		/*font-size: 100%;*/
-    		font-family: 'Helvetica Neue', Helvetica, sans-serif;
-  			
-  			line-height: 1.8;
-
-  			color: #004040;
-  			position: relative;
-		}
-
-		#total {
-			display: flex;
-		}
-
-		#option {
-			margin-left: 50px;
-		}
-
-
-
-	</style>
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body>
 	<div id="total">
-		<div>
+		<div id="grid">
 			<table>
 				<tr>
 					<th id="0" class="unchecked"></th>
@@ -184,13 +112,16 @@
 					<th id="80" class="unchecked"></th>
 				</tr>
 			</table>
-			<div>
+
+			<div id="timer">
 				<span id="s"></span> s <span id="m"></span> m <span id="h"></span> h
 			</div>
+
 		</div>
+
 		<div id="option">
 			<input type="button" value="Imprimer cette page" onClick="window.print()">
-			<input type="button" value="Valider" name="valid" id="valid" onClick="check()">
+			<input type="button" value="Verifier" name="valid" id="valid" onClick="check()">
 			<div>
 				<br>
 				<table>
@@ -199,8 +130,8 @@
 						<th>Score</th>
 					</tr>
 					<tr>
-						<td id="user0">Baptiste</td>
-						<td id="score0">00:00:01</td>
+						<td id="user0"></td>
+						<td id="score0"></td>
 					</tr>
 					<tr>
 						<td id="user1"></td>
@@ -231,12 +162,12 @@
 		</div>
 	</div>
 
-	<div id="login">
-		<br>
-		<br>
+	<div id="victoire">
+		<br/> <br/>
+
 		<h2>Sudoku</h2>
 		<p>
-			Bravo tu as terminer le sudoku en <br /><span id="temps">(Temps)</span>
+			Bravo tu as terminer le sudoku en <br/><span id="temps">(Temps)</span>
 		</p>
 		<br>
 		<label for="username">Nom d'utilisateur pour sauvegarder le score : </label> <br> 
