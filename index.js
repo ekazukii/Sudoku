@@ -50,10 +50,11 @@ app.get('/save', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     var username = req.query.username;
     var score = req.query.score;
+    var level = req.query.level;
 
     console.log(req.query);
 
-    sql = "INSERT INTO score (username, score) VALUES ('"+username+"', '"+score+"')";
+    sql = "INSERT INTO score (username, score, level) VALUES ("+con.escape(username)+", "+con.escape(score)+", "+ con.escape(level)+")";
     con.query(sql, function (error, results, fields) {
         if (error) throw error;
         console.log(results);
@@ -61,9 +62,9 @@ app.get('/save', function(req, res) {
     res.send(JSON.stringify({}));
 })
 
-app.get('/bestScore', function(req, res) {
+app.get('/bestScore/:level', function(req, res) {
     res.setHeader('Content-Type', 'application/json');
-    sql = "SELECT * FROM score ORDER BY score LIMIT 7"
+    sql = "SELECT * FROM score WHERE level = "+con.escape(req.params.level)+" ORDER BY score LIMIT 7";
     con.query(sql, function(err, results, fields) {
         if (err) throw err;
         console.log(results)

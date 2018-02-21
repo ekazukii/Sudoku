@@ -201,6 +201,8 @@
     $("#victoire").hide();
     var sudoku, grid;
     var score = '00:00:00';
+    var level, cheat, duel, onetry, speed, endless;
+    var m = 0, s = 0, h = 0;
 
 
 	function check() {
@@ -233,30 +235,30 @@
 			//$("#temps").html(h +" heures, " + m + " minutes et " + s + " secondes");
 			score = dchiffre(h) + ':' + dchiffre(m) + ':' + dchiffre(s);
 			$("#temps").html(score);
-			$("#login").fadeIn();
+			$("#victoire").fadeIn();
 			clearInterval(temps);
 		}
 	}
 	
 
 	function start() {
-		var level   = $("select[name='niveau'] > option:selected").val();
-		var cheat   = $('input[name=cheat]').is(':checked');
-		var duel    = $('input[name=duel]').is(':checked');
-		var onetry  = $('input[name=onetry]').is(':checked');
-		var speed   = $('input[name=speed]').is(':checked');
-		var endless = $('input[name=endless]').is(':checked');
+		level   = $("select[name='niveau'] > option:selected").val();
+		cheat   = $('input[name=cheat]').is(':checked');
+		duel    = $('input[name=duel]').is(':checked');
+		onetry  = $('input[name=onetry]').is(':checked');
+		speed   = $('input[name=speed]').is(':checked');
+		endless = $('input[name=endless]').is(':checked');
 	    sudoku = new Sudoku();
 		sudoku.generate();
 
 		if (level == 1) {
-			var grid = sudoku.forget(0.30);
+			grid = sudoku.forget(0.00);
 		} else if (level == 2) {
-			var grid = sudoku.forget(0.40);
+			grid = sudoku.forget(0.00);
 		} else if (level == 3) {
-			var grid = sudoku.forget(0.50);
+			grid = sudoku.forget(0.50);
 		} else {
-			var grid = sudoku.forget(0.60);
+			grid = sudoku.forget(0.60);
 		}
 
 		$("#total").show();
@@ -284,7 +286,7 @@
 		}
 
 		$.ajax({
-			url: '/bestScore',
+			url: '/bestScore/'+ level,
 			type: 'get',
 			datatype: 'json',
 
@@ -297,8 +299,6 @@
 	        }
 
 		})
-	 
-		var m = 0, s = 0, h = 0;
 
 		var temps = setInterval(function()
 		{
@@ -320,17 +320,17 @@
 	}
 
 	function loginButton() {
-		if ($("#login").is(':hidden')){
-			$("#login").fadeIn();
+		if ($("#victoire").is(':hidden')){
+			$("#victoire").fadeIn();
 		} else {
-			$("#login").fadeOut();
+			$("#victoire").fadeOut();
 		}
 	}
 
 	function save() {
 		var username = $("#username").val(); 
 		$.ajax({
-			url: '/save?username=' + username + "&score=" + score,
+			url: '/save?username=' + username + "&score=" + score + "&level=" + level,
 			type: 'get',
 			//data: 'username=' + username + "&score=" + score,
 			datatype: 'json',
