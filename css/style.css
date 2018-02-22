@@ -16,6 +16,21 @@ body {
 	box-shadow: 10px 10px 5px #888888;
 	z-index: 10; 
 }
+
+#victoireCheat {
+	text-align: center;
+	top: 5em;
+	width: 25em;
+	height: 25em;
+	left: 50%;
+ 	transform: translate(-50%, 0);
+
+	position: absolute;
+	background-color: rgb(233, 229, 238);
+	border: black 1px solid;
+	box-shadow: 10px 10px 5px #888888;
+	z-index: 10; 
+}
 	
 #select {
 	top: 7em;
@@ -108,5 +123,30 @@ h1 {
 }
 
 #start:hover {
+	background-color: rgb(200,200,200);
+}
+
+#cheatbox{
+	padding-top: 5px;
+	text-align: center;
+	height: 25px;
+	width: 25px;
+	border: 1px solid black;
+}
+
+.button {
+
+	text-align: center;
+	background-color: rgb(100,100,100);
+	text-indent: 0px;
+	border: 1px solid black;
+	border-radius: 10px;
+	font-size: 35px;
+	margin-left: 125px;
+	margin-right: 125px; 
+	cursor: default;
+}
+
+.button:hover {
 	background-color: rgb(200,200,200);
 }

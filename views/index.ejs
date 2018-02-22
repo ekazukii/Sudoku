@@ -25,7 +25,7 @@
 			<p> Une chance : <input type="checkbox" name="onetry"  value="onetry">  </p>
 			<p> Speed      : <input type="checkbox" name="speed"   value="speed">   </p>
 			<p> Infini     : <input type="checkbox" name="endless" value="endless"> </p>
-			<p id="start" onclick="start()"> Lancer </p>
+			<p class="button" onclick="start()"> Lancer </p>
 		</div>
 	</div>
 
@@ -141,11 +141,18 @@
 		</div>
 
 		<div id="option">
-			<input type="button" value="Imprimer cette page" onClick="window.print()">
-			<input type="button" value="Verifier" name="valid" id="valid" onClick="check()">
+			<p><input type="button" value="Imprimer cette page" onClick="window.print()"></p>
+			<p><input type="button" value="Verifier" name="valid" id="valid" onClick="check()"></p>
+			<div id="cheatAllow">
+				<p>
+					<label for="cheatAllow">Triche : </label>
+					<input type="checkbox" name="cheatAllow">
+				</p> 
+				<p id="cheatbox"></p>
+			</div>
 			<div>
 				<br>
-				<table>
+				<table id="scoreboard">
 					<tr>
 						<th>Username</th>
 						<th>Score</th>
@@ -187,7 +194,7 @@
 		<br/> <br/>
 
 		<h2>Sudoku</h2>
-		<p> Bravo tu as terminer le sudoku en <br/><span id="temps">(Temps)</span> </p>
+		<p> Bravo tu as terminer le sudoku en <br/><span class="temps">(Temps)</span> </p>
 		<br>
 
 		<label for="username">Nom d'utilisateur pour sauvegarder le score : </label> <br/> <br/>
@@ -195,13 +202,29 @@
 		<input type="button" name="connect" id="connect" value="Sauvegarder" onClick="save()"> <br/> <br/>
 	</div> 
 
+	<div id="victoireCheat">
+		<br/> <br/>
+
+		<h2>Sudoku</h2>
+		<p> Bravo tu as terminer le sudoku en <br/><span class="temps">(Temps)</span> </p>
+		<br>
+
+		<p> Pour enrigistrer les scores il ne faut pas tricher :p</p>
+		<br/>
+
+		<p class="button" onclick="location.reload()"> Refaire </p>
+	</div>
+
 	<script type="text/javascript">
 
     $("#total").hide();
     $("#victoire").hide();
+    $("#cheatAllow").hide();
+    $("#victoireCheat").hide();
+
     var sudoku, grid;
     var score = '00:00:00';
-    var level, cheat, duel, onetry, speed, endless;
+    var level, cheat, duel, onetry, speed, endless, temps;
     var m = 0, s = 0, h = 0;
 
 
@@ -234,8 +257,12 @@
 		if (document.getElementsByClassName("unchecked").length === 0) {
 			//$("#temps").html(h +" heures, " + m + " minutes et " + s + " secondes");
 			score = dchiffre(h) + ':' + dchiffre(m) + ':' + dchiffre(s);
-			$("#temps").html(score);
-			$("#victoire").fadeIn();
+			$(".temps").html(score);
+			if (cheat) {
+				$("#victoireCheat").show();
+			} else {
+				$("#victoire").show();
+			}
 			clearInterval(temps);
 		}
 	}
@@ -252,7 +279,7 @@
 		sudoku.generate();
 
 		if (level == 1) {
-			grid = sudoku.forget(0.30);
+			grid = sudoku.forget(0.00);
 		} else if (level == 2) {
 			grid = sudoku.forget(0.40);
 		} else if (level == 3) {
@@ -264,10 +291,13 @@
 		$("#total").show();
 		$("#select").hide();
 
+		if (cheat) {
+			$("#scoreboard").hide();
+			$("#cheatAllow").show();
+		}
+
 		$("body").css("background-color","white");
 
-
-		console.log(grid);
 		for (var i = 0; i < 80; i++) {
 			if (!grid[i].forget) {
 				document.getElementById(i).innerHTML = grid[i].value;
@@ -282,7 +312,14 @@
 			element.setAttribute('type', 'text');
 			element.setAttribute('class', 'input');
 			elements[i].appendChild(element)
-			//elements[i].addEventListener("click", function() {alert('test')},false);
+			elements[i].addEventListener("click", function() { 
+				if (cheat) {
+					if ($('input[name=cheatAllow]').is(':checked')) {
+						document.getElementById('cheatbox').innerHTML = grid[this.id].value;
+						console.log(grid[this.id].value)
+					}
+				} 
+			},false);
 		}
 
 		$.ajax({
@@ -300,7 +337,7 @@
 
 		})
 
-		var temps = setInterval(function()
+		temps = setInterval(function()
 		{
 			s++;
 			if(s > 59) {
